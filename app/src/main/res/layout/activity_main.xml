@@ -1,83 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ldy.spectrometertest.MainActivity">
+    android:background="#000000">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#aaaaaa"
-        android:text=" " />
 
     <Button
         android:id="@+id/getUsbPermission"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/message"
-        android:layout_centerInParent="true"
-        android:text="获取USB访问权限" />
-
-    <Button
-        android:id="@+id/getSerialNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/getUsbPermission"
-        android:layout_alignParentLeft="true"
-        android:text="序列号" />
-
-    <Button
-        android:id="@+id/getWavelengthCoeff"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/getSerialNumber"
-        android:layout_below="@id/getUsbPermission"
-        android:text="波长系数" />
-
-    <Button
-        android:id="@+id/getNonLineariltyCoefficients"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/getWavelengthCoeff"
-        android:layout_below="@id/getUsbPermission"
-        android:text="非线性系数" />
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="80dp"
+        android:background="@drawable/shape"
+        android:text="获取USB访问权限"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/saveImage"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/getSpectrum"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/getNonLineariltyCoefficients"
-        android:layout_alignParentLeft="true"
-        android:text="获取光谱" />
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape"
+        android:text="获取光谱"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/saveImage"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/getUsbPermission"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <Button
-        android:id="@+id/saveImage"
+    <TextView
+        android:id="@+id/introduce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/getSpectrum"
-        android:layout_below="@id/getNonLineariltyCoefficients"
-        android:text="保存光谱图像"
-        />
-
-    <Button
-        android:id="@+id/sendToEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/getNonLineariltyCoefficients"
-        android:layout_toRightOf="@id/saveImage"
-        android:text="发送到邮箱"
-        />
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center_horizontal"
+        android:text="Spectra acquisition software\nfor Ocean Optics EMBED2000+"
+        android:textSize="20sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/chart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
     <LinearLayout
         android:id="@+id/chart"
-        android:layout_height="400dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/shape"
         android:orientation="horizontal"
-        android:layout_below="@id/getSpectrum">
+        app:layout_constraintBottom_toTopOf="@+id/getUsbPermission"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/introduce">
 
+        <TextView
+            android:id="@+id/spectraShowHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:text="光谱显示区域"
+            android:textColor="#ffffff"
+            android:textSize="28sp" />
     </LinearLayout>
 
-</RelativeLayout>
+    <ImageButton
+        android:id="@+id/aboutOpen"
+        android:layout_width="22dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Open the information of spectrometer."
+        app:layout_constraintBottom_toTopOf="@+id/chart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_overflow" />
+
+    <ImageButton
+        android:id="@+id/saveImage"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sendEmail"
+        app:layout_constraintTop_toBottomOf="@+id/chart"
+        app:srcCompat="@drawable/save" />
+
+    <ImageButton
+        android:id="@+id/sendEmail"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chart"
+        app:srcCompat="@drawable/email" />
+</android.support.constraint.ConstraintLayout>
