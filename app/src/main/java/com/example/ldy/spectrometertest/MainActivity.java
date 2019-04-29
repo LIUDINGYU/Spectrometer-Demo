@@ -326,7 +326,28 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    private void saveSpectrumToTxt(String saveContent){
+    public void saveSpectrumToTxt(String inputText){    /*@param inputText: 传入要保存的数据*/
+        Log.d(TAG, "saveSpectrumToTxt: start of saveSpectrumToText");
+        FileOutputStream outputStream = null;
+        BufferedWriter writer = null;
+        try{
+            outputStream = openFileOutput("data.txt",Context.MODE_PRIVATE);  //文件名，文件操作模式
+            writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+            writer.write(inputText);
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (writer != null){
+                    writer.close();
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+        Log.d(TAG, "saveSpectrumToTxt: end of saveSpectrumToText");
+    }
+    /*private void saveSpectrumToTxt(String saveContent){
         Log.d(TAG, "saveSpectrumToTxt: start of saveTxt");
         BufferedWriter out = null;
         if(isHasSDCard) {
@@ -351,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
             }
             Log.d(TAG, "saveSpectrumToTxt: isHasSDCard is true. End of saveTxt");
         }
-    }
+    }*/
 
     private GraphicalView DrawLine(double[] xValue, double[] yValue, XYMultipleSeriesDataset dataset, XYMultipleSeriesRenderer renderer) {
         /*double[] xValue = {896.35,897.98,899.6,901.22,902.85,904.47,906.1,907.72,909.34,910.97,912.59,914.21,
