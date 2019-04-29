@@ -1,6 +1,7 @@
 package com.example.ldy.spectrometertest;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
             private double[] getSpectrum() {
                 try {
-                    embed.setIntegrationTime(10000);    // 积分时间可修改，改为1 x0ms，最开始为100ms
+                    embed.setIntegrationTime(10000);    // 积分时间可修改，改为10ms，最开始为100ms
                 } catch (IOException e) {
                     e.printStackTrace();
                     return null;
@@ -329,22 +330,24 @@ public class MainActivity extends AppCompatActivity {
     public void saveSpectrumToTxt(String inputText){    /*@param inputText: 传入要保存的数据*/
         Log.d(TAG, "saveSpectrumToTxt: start of saveSpectrumToText");
         FileOutputStream outputStream = null;
-        BufferedWriter writer = null;
-        try{
-            outputStream = openFileOutput("data.txt",Context.MODE_PRIVATE);  //文件名，文件操作模式
-            writer = new BufferedWriter(new OutputStreamWriter(outputStream));
-            writer.write(inputText);
-        }catch (IOException e){
-            e.printStackTrace();
-        }finally {
-            try {
-                if (writer != null){
-                    writer.close();
-                }
-            }catch (IOException e){
+        String path = this.getFilesDir().getPath()+"/";
+        Log.d(TAG, "saveSpectrumToTxt: 内部文件路径 "+path);
+        File file = new File(path+"data.txt");
+        if (file.exists()){
+            Log.d(TAG, "saveSpectrumToTxt: 文件在内部已经存在");
+        }else
+            try{
+                outputStream = openFileOutput("data.txt", Activity.MODE_APPEND);
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream,"utf-8");
+                outputStreamWriter.write(inputText);
+                outputStream.flush();
+                outputStreamWriter.flush();
+                outputStreamWriter.close();
+                outputStream.close();
+            }catch (Exception e){
                 e.printStackTrace();
             }
-        }
+
         Log.d(TAG, "saveSpectrumToTxt: end of saveSpectrumToText");
     }
     /*private void saveSpectrumToTxt(String saveContent){
