@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //将波长信息绘图，并且加载到chart中
                 chart = (LinearLayout) findViewById(R.id.chart);
-                view = DrawLine(wavelength, intensity, dataset, renderer);
+                view = DrawLine( dataset, renderer);
                 chart.removeAllViews();
                 chart.addView(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
             }
@@ -353,7 +353,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private GraphicalView DrawLine(double[] xValue, double[] yValue, XYMultipleSeriesDataset dataset, XYMultipleSeriesRenderer renderer) {
+    private GraphicalView DrawLine( XYMultipleSeriesDataset dataset, XYMultipleSeriesRenderer renderer) {
+        double[] xValue = [];
+        double[] yValue = [];
         XYSeriesRenderer lineRenderer = new XYSeriesRenderer();
         XYSeries line1 = new XYSeries("wavelength");
         for (int i = 0; i < xValue.length; i++) {
