@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
             private double[] getSpectrum() {
                 try {
-                    embed.setIntegrationTime(100000);    // 100 ms
+                    embed.setIntegrationTime(10000);    // 积分时间可修改，改为1 x0ms，最开始为100ms
                 } catch (IOException e) {
                     e.printStackTrace();
                     return null;
@@ -354,7 +354,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private GraphicalView DrawLine(double[] xValue, double[] yValue, XYMultipleSeriesDataset dataset, XYMultipleSeriesRenderer renderer) {
-
         XYSeriesRenderer lineRenderer = new XYSeriesRenderer();
         XYSeries line1 = new XYSeries("wavelength");
         for (int i = 0; i < xValue.length; i++) {
