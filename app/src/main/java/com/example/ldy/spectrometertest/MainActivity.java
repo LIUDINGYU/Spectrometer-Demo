@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //将波长信息绘图，并且加载到chart中
                 chart = (LinearLayout) findViewById(R.id.chart);
-                view = DrawLine( dataset, renderer);
+                view = DrawLine(wavelength,intensity, dataset, renderer);
                 chart.removeAllViews();
                 chart.addView(view, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT);
             }
@@ -353,34 +353,43 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private GraphicalView DrawLine( XYMultipleSeriesDataset dataset, XYMultipleSeriesRenderer renderer) {
-        double[] xValue = [];
-        double[] yValue = [];
+    private GraphicalView DrawLine(double[] xValue, double[] yValue, XYMultipleSeriesDataset dataset, XYMultipleSeriesRenderer renderer) {
+        /*double[] xValue = {896.35,897.98,899.6,901.22,902.85,904.47,906.1,907.72,909.34,910.97,912.59,914.21,
+                915.84,917.46,919.08,920.71,922.33,923.95,925.58,927.2,928.82,930.44,932.07,933.69,935.31,936.93,
+                938.56,940.18,941.8,943.42,945.05,946.67,948.29,949.91,951.53,953.16,954.78,956.4,958.02,959.64,
+                961.26,962.88,964.51,966.13,967.75,969.37,970.99,972.61,974.23,975.85
+        };
+        double[] yValue = {3036.65,3034.91,3043.28,3050.26,3055.14,3058.28,3064.91,3075.37,3082.7,3094.21,3107.81,3126.64,
+                3150.36,3176.17,3196.4,3216.63,3231.98,3252.56,3259.89,3265.12,3271.05,3279.07,3279.77,3277.67,3282.21,
+                3292.32,3300.7,3305.93,3314.65,3324.06,3325.11,3327.9,3318.14,3325.81,3326.86,3335.58,3330.34,
+                3329.3,3328.25,3334.88,3337.67,3336.62,3338.37,3340.81,3340.46,3340.11,3334.53,3341.85,3341.16,3348.13
+        };*/
         XYSeriesRenderer lineRenderer = new XYSeriesRenderer();
         XYSeries line1 = new XYSeries("wavelength");
         for (int i = 0; i < xValue.length; i++) {
             line1.add(xValue[i], yValue[i]);
         }
 
-        lineRenderer.setColor(Color.BLUE);
-        lineRenderer.setPointStyle(PointStyle.POINT);
-        lineRenderer.setDisplayChartValues(false);
-        lineRenderer.setChartValuesTextSize(30);
+        lineRenderer.setColor(Color.BLUE);           //图线颜色
+        lineRenderer.setPointStyle(PointStyle.POINT);   //数据点模式
+        lineRenderer.setDisplayChartValues(false);      //是否显示各点数据，否
+        lineRenderer.setChartValuesTextSize(30);        //点数据字体大小
 
-        renderer.setXLabelsPadding(20);
-        renderer.setYLabelsPadding(20);
-        renderer.setXTitle("wavelength");
-        renderer.setYTitle("intensity");
-        renderer.setAxisTitleTextSize(50);
-        //renderer.setXLabels(5);
+        renderer.setXLabelsPadding(20);            //x轴下标签与x轴的距离
+        renderer.setYLabelsPadding(20);            //y轴左标签与y轴的距离
+        renderer.setXTitle("wavelength");          //x轴标题
+        renderer.setYTitle("intensity");         //y轴标题
+        renderer.setAxisTitleTextSize(30);         //轴标题字体大小
+        //renderer.setXLabels(5);                 //x轴显示的坐标个数
         //renderer.setYLabels(5);
-        //renderer.setLabelsTextSize(30);
-        //renderer.setXAxisMin(895);
+        renderer.setLabelsTextSize(30);           //轴标签字体大小
+        //renderer.setXAxisMin(895);               //x轴坐标显示的第一个坐标数值
         //renderer.setXAxisMax(945);
         //renderer.setYAxisMin();
         //renderer.setYAxisMax(945);
-        //renderer.setRange(new double[] {0d,10d,100d,150d});
+        renderer.setMargins(new int[] {20,120,100,20});  //图表四周的范围，上左下右
         //renderer.setPanEnabled(true, true);
+        renderer.setFitLegend(true);
         renderer.setShowGrid(false);
 
         dataset.addSeries(line1);
