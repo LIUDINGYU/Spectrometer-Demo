@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
             private double[] getSpectrum() {
                 try {
-                    embed.setIntegrationTime(10000);    // 积分时间可修改，改为10ms，最开始为100ms
+                    embed.setIntegrationTime(60000);    // 积分时间可修改，改为60ms，最开始为100ms
                 } catch (IOException e) {
                     e.printStackTrace();
                     return null;
@@ -142,9 +142,9 @@ public class MainActivity extends AppCompatActivity {
             //final Intent intent = DrawPic(wavelength, intensity);
             //输入量为两个double[]数组，返回值为GraphicalIntent类型，利用startActivity(intent)就可以启动全屏显示
             private void showSpectrum(double[] wavelength, double[] intensity) {
-                String info = null;
+                String info = "";
                 for (int i = 0; i < wavelength.length; i++) {
-                    info += "pixel" + i + "value is" + wavelength[i] + "," + intensity[i];
+                    info += i + "," + wavelength[i] + "," + intensity[i]+"\r\n";
                 }
                 //将波长和强度信息作为txt保存到本地
                 saveSpectrumToTxt(info);
@@ -327,7 +327,35 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    public void saveSpectrumToTxt(String inputText){    /*@param inputText: 传入要保存的数据*/
+    private void saveSpectrumToTxt(final String saveContent) {
+        if (isHasSDCard) {
+            String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SpectrumData/" + System.currentTimeMillis() + ".txt";
+            final File file = new File(path);
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+                OutputStreamWriter osw = new OutputStreamWriter(fos,"utf-8");
+                osw.write(saveContent);
+                Toast.makeText(MainActivity.this, "Text saved: " + path, Toast.LENGTH_SHORT).show();
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Uri uri = Uri.fromFile(file);
+                        getBaseContext().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+                    }
+                });
+                fos.flush();
+                osw.flush();
+                osw.close();
+                fos.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    /*public void saveSpectrumToTxt(String inputText){    *//*@param inputText: 传入要保存的数据*//*
         Log.d(TAG, "saveSpectrumToTxt: start of saveSpectrumToText");
         FileOutputStream outputStream = null;
         String path = this.getFilesDir().getPath()+"/";
@@ -349,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         Log.d(TAG, "saveSpectrumToTxt: end of saveSpectrumToText");
-    }
+    }*/
     /*private void saveSpectrumToTxt(String saveContent){
         Log.d(TAG, "saveSpectrumToTxt: start of saveTxt");
         BufferedWriter out = null;
