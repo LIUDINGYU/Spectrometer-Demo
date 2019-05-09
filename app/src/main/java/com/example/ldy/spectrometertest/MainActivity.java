@@ -101,12 +101,31 @@ public class MainActivity extends AppCompatActivity {
         btnGetSpectrum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (embed != null) {
-                    double[] wavelength = getWavelengthFromSpectrometer();
-                    double[] intensity = getSpectrum();
-                    showSpectrum(wavelength, intensity);
-                    Log.d(TAG, "onClick: embed is " + embed);
+                final int repTime = 10;
+                double[][] wavelength = new double[repTime][];
+                double[][] intensity = new double[repTime][];
+                for (int i = 0; i < 10; i++){  //苹果漫反射结果波动太大，尝试使用10次平均值
+                    if (embed != null) {
+                        wavelength[i] = getWavelengthFromSpectrometer();
+                        intensity[i] = getSpectrum();
+                        //showSpectrum(wavelength, intensity);
+                        //Log.d(TAG, "onClick: embed is " + embed);
+                    }
                 }
+
+                double[] wavelength_mean = new double[wavelength[0].length];
+                double[] intensity_mean = new double[wavelength[0].length];
+                for (int i = 0; i < wavelength[0].length; i++) {
+                    for (int j = 0; j < repTime; j++) {
+                        wavelength_mean[i] += wavelength[j][i];
+                        intensity_mean[i] += intensity[j][i];
+                    }
+                    wavelength_mean[i] /= repTime * 1.0;
+                    intensity_mean[i] /= repTime * 1.0;
+                }
+                showSpectrum(wavelength_mean,intensity_mean);
+                Log.d(TAG, "onClick: embed is "+embed);
+
             }
 
             private double[] getWavelengthFromSpectrometer() {
@@ -120,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
             private double[] getSpectrum() {
                 try {
-                    embed.setIntegrationTime(60000);    // 积分时间可修改，改为60ms，最开始为100ms
+                    embed.setIntegrationTime(15000);    // 积分时间可修改，改为15ms，最开始为100ms
                 } catch (IOException e) {
                     e.printStackTrace();
                     return null;
