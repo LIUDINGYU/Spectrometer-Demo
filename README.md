@@ -1,4 +1,4 @@
 # Spectrometer-Demo
 
 Spectral acquisition software for supporting miniatured spectrometer, based on ANDROID.<br>
-这个demo主要为本科毕业设计开发，主要适用于Ocean Optics定制的EMBED2000+微型光谱仪。
+This demo is developed for graduation project and is primarily for EMBED2000+ miniatured spectrometer customed by Ocean Optics.
